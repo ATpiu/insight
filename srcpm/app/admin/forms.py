@@ -162,6 +162,6 @@ class VulTypeForm(Form):
 
 	''' 验证漏洞类型是否已存在 '''
 	def validate_vul_type(self, field):
-		if request.endpoint[:] != 'admin.vul_type_modify':
+		if request.endpoint[:18] != 'admin.vul_type_modify':
 			if VulType.query.filter_by(vul_type=field.data).first():
 				raise ValidationError(u'漏洞类型已经存在')
