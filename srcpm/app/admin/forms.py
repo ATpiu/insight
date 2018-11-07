@@ -157,11 +157,11 @@ class AssetForm(Form):
 
 ''' 漏洞类型提交表单 '''
 class VulTypeForm(Form):
-	vul_type = StringField(u'漏洞类型')
+	vul_type = StringField(u'漏洞类型',validators=[Required(),Length(1, 64)])
 	submit = SubmitField(u'提交')
 
 	''' 验证漏洞类型是否已存在 '''
-	def validate_domain(self, field):
-		if request.endpoint[:18] != 'src.vul_type_modify':
-			if VulType.query.filter_by(domain=field.data).first():
+	def validate_vul_type(self, field):
+		if request.endpoint[:] != 'admin.vul_type_modify':
+			if VulType.query.filter_by(vul_type=field.data).first():
 				raise ValidationError(u'漏洞类型已经存在')
